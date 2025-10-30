@@ -1,6 +1,7 @@
 {
   "name": "GitHub Actions (TypeScript)",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
+  "onCreateCommand": "sudo apt-get update && sudo apt-get install cmake pkg-config -y && gem install licensed && corepack enable",
   "postCreateCommand": "npm install",
   "customizations": {
     "codespaces": {
@@ -37,6 +38,7 @@
   },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers-community/npm-features/prettier:1": {}
+    "ghcr.io/devcontainers-community/npm-features/prettier:1": {},
+    "ghcr.io/devcontainers/features/ruby:1": { "version": "latest" }
   }
 }
