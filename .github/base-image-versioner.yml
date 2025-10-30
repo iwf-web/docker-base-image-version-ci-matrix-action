@@ -12,7 +12,7 @@ strategy: latest
 builds:
   # Default build configuration
   - name: default
-    dockerfilePath: Dockerfile
+    dockerfilePath: ./__tests__/docker/Dockerfile
     contextPath: ./__tests__/docker
     buildArgs:
       VERDACCIO_VERSION: '{version}'

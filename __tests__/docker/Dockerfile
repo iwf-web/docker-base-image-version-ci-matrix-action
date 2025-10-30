@@ -1,1 +1,1 @@
-FROM verdaccio/verdaccio:$VERDACCIO_VERSION
+FROM verdaccio/verdaccio:$BASE_IMAGE_VERSION

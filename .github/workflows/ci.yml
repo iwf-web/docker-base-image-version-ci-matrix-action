@@ -98,11 +98,31 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Docker meta (Docker Hub)
+        id: meta-pre
+        run: |
+          echo "digest=$(docker manifest inspect verdaccio/verdaccio:${{ matrix.version }} -v | jq -r '[.[]|select(.Descriptor.platform.architecture=="amd64")][0].Descriptor.digest')" >> $GITHUB_OUTPUT
+
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: iwf-web/verdaccio
+          labels: |
+            org.opencontainers.image.title=Verdaccio Docker Image
+            org.opencontainers.image.authors=D3strukt0r <dev@d3strukt0r.me>
+            org.opencontainers.image.documentation=${{ github.event.repository.html_url }}
+            org.opencontainers.image.vendor=IWF Web Solutions
+            org.opencontainers.image.ref.name=verdaccio/verdaccio
+            org.opencontainers.image.base.name=docker.io/verdaccio/verdaccio:${{ matrix.version }}
+            org.opencontainers.image.base.digest=${{ steps.meta-pre.outputs.digest }}
+
+      - name: Prepare build arguments
+        id: prepare-build-args
+        run: |
+          echo 'build-args<<EOF' >> $GITHUB_OUTPUT
+          echo '${{ toJSON(matrix.buildArgs) }}' | jq -r 'to_entries | .[] | "\(.key)=\(.value)"'
+          echo 'EOF' >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
         id: build-and-push
@@ -110,10 +130,11 @@ jobs:
         with:
           context: ${{ matrix.contextPath }}
           file: ${{ matrix.dockerfilePath }}
+          build-args: ${{ steps.prepare-build-args.outputs.build-args }}
           load: true
           tags: ${{ join(matrix.tags, ',') }}
-          build-args: |
-            ${{ join(matrix.buildArgs, '\n') }}
+          labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
