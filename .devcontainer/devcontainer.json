@@ -2,7 +2,7 @@
   "name": "GitHub Actions (TypeScript)",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
   "onCreateCommand": "sudo apt-get update && sudo apt-get install cmake pkg-config -y && gem install licensed && corepack enable",
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "pnpm install",
   "customizations": {
     "codespaces": {
       "openFiles": ["README.md"]
