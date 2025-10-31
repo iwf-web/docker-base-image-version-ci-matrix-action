@@ -1,17 +1,17 @@
 {
-  "name": "@iwf-web/docker-base-image-version-ci-matrix-action",
+  "name": "@iwf-web/docker-image-version-matrix-action",
   "description": "Action to build matrix based on a base docker image version tags",
   "version": "1.0.0",
   "author": "",
   "type": "module",
   "private": true,
-  "homepage": "https://github.com/iwf-web/docker-base-image-version-ci-matrix-action",
+  "homepage": "https://github.com/iwf-web/docker-image-version-matrix-action",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iwf-web/docker-base-image-version-ci-matrix-action.git"
+    "url": "git+https://github.com/iwf-web/docker-image-version-matrix-action.git"
   },
   "bugs": {
-    "url": "https://github.com/iwf-web/docker-base-image-version-ci-matrix-action/issues"
+    "url": "https://github.com/iwf-web/docker-image-version-matrix-action/issues"
   },
   "keywords": [
     "actions"

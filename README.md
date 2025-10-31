@@ -1,9 +1,9 @@
 # Docker Base Image Version CI Matrix Action
 
-[![GitHub Super-Linter](https://github.com/iwf-web/docker-base-image-version-ci-matrix-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/iwf-web/docker-base-image-version-ci-matrix-action/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/iwf-web/docker-base-image-version-ci-matrix-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/iwf-web/docker-base-image-version-ci-matrix-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/iwf-web/docker-base-image-version-ci-matrix-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/iwf-web/docker-base-image-version-ci-matrix-action/actions/workflows/codeql-analysis.yml)
+[![GitHub Super-Linter](https://github.com/iwf-web/docker-image-version-matrix-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
+![CI](https://github.com/iwf-web/docker-image-version-matrix-action/actions/workflows/ci.yml/badge.svg)
+[![Check dist/](https://github.com/iwf-web/docker-image-version-matrix-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/iwf-web/docker-image-version-matrix-action/actions/workflows/check-dist.yml)
+[![CodeQL](https://github.com/iwf-web/docker-image-version-matrix-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/iwf-web/docker-image-version-matrix-action/actions/workflows/codeql-analysis.yml)
 [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
 
 A GitHub Action that automatically generates a build matrix based on Docker base
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Generate build matrix
         id: generate
-        uses: iwf-web/docker-base-image-version-ci-matrix-action@v1
+        uses: iwf-web/docker-image-version-matrix-action@v1
         with:
           base-image: 'verdaccio/verdaccio'
 
@@ -223,7 +223,7 @@ jobs:
       matrix: ${{ steps.generate.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-      - uses: iwf-web/docker-base-image-version-ci-matrix-action@v1
+      - uses: iwf-web/docker-image-version-matrix-action@v1
         id: generate
         with:
           base-image: 'verdaccio/verdaccio'
@@ -260,26 +260,26 @@ The action outputs a JSON matrix in this format:
 1. Install dependencies:
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. Bundle the TypeScript:
 
    ```bash
-   npm run bundle
+   pnpm run bundle
    ```
 
 3. Run tests:
 
    ```bash
-   npm test
+   pnpm test
    ```
 
 ### Making Changes
 
 1. Edit TypeScript files in `src/`
-2. Run `npm run bundle` to compile
-3. Run `npm test` to ensure tests pass
+2. Run `pnpm run bundle` to compile
+3. Run `pnpm test` to ensure tests pass
 4. Commit both `src/` and `dist/` changes
 
 ## Contributing

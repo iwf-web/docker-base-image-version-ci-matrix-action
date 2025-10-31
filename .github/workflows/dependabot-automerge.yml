@@ -13,9 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     # Checking the actor will prevent your Action run failing on non-Dependabot PRs
-    if:
-      github.event.pull_request.user.login == 'dependabot[bot]' &&
-      github.repository == 'iwf-web/docker-base-image-version-ci-matrix-action'
+    if: github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.repository == 'iwf-web/docker-image-version-matrix-action'
 
     steps:
       - name: Checkout

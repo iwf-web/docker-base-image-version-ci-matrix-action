@@ -26,14 +26,10 @@ interface DockerHubTagsResponse {
 export async function fetchDockerTags(imageName: string): Promise<DockerTag[]> {
   core.info(`Fetching tags for Docker image: ${imageName}`)
 
-  const client = new httpClient.HttpClient(
-    'docker-base-image-version-action',
-    [],
-    {
-      allowRetries: true,
-      maxRetries: 3
-    }
-  )
+  const client = new httpClient.HttpClient('docker-image-version-action', [], {
+    allowRetries: true,
+    maxRetries: 3
+  })
 
   const tags: DockerTag[] = []
   let url = buildDockerHubUrl(imageName)

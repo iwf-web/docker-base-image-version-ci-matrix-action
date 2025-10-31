@@ -5,7 +5,7 @@
 - **Manuele** - [D3strukt0r](https://github.com/D3strukt0r)
 
 See also the full list of
-[contributors](https://github.com/iwf-web/docker-base-image-version-ci-matrix-action/contributors)
+[contributors](https://github.com/iwf-web/docker-image-version-matrix-action/contributors)
 who participated in this project.
 
 ## I would like to join this list. How can I help the project?
