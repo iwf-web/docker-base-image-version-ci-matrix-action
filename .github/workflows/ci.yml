@@ -116,13 +116,30 @@ jobs:
             org.opencontainers.image.ref.name=verdaccio/verdaccio
             org.opencontainers.image.base.name=docker.io/verdaccio/verdaccio:${{ matrix.version }}
             org.opencontainers.image.base.digest=${{ steps.meta-pre.outputs.digest }}
+          annotations: |
+            org.opencontainers.image.title=Verdaccio Docker Image
+            org.opencontainers.image.authors=D3strukt0r <dev@d3strukt0r.me>
+            org.opencontainers.image.documentation=${{ github.event.repository.html_url }}
+            org.opencontainers.image.vendor=IWF Web Solutions
+            org.opencontainers.image.ref.name=verdaccio/verdaccio
+            org.opencontainers.image.base.name=docker.io/verdaccio/verdaccio:${{ matrix.version }}
+            org.opencontainers.image.base.digest=${{ steps.meta-pre.outputs.digest }}
 
-      - name: Prepare build arguments
-        id: prepare-build-args
-        run: |
-          echo 'build-args<<EOF' >> $GITHUB_OUTPUT
-          echo '${{ toJSON(matrix.buildArgs) }}' | jq -r 'to_entries | .[] | "\(.key)=\(.value)"'
-          echo 'EOF' >> $GITHUB_OUTPUT
+      - name: Prepare build arguments and tags
+        id: prepare
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const buildArgs = ${{ toJSON(matrix.buildArgs) }};
+            const buildArgsString = Object.entries(buildArgs)
+              .map(([key, value]) => `${key}=${value}`)
+              .join('\n');
+            core.setOutput('buildArgs', buildArgsString);
+
+            const tags = ${{ toJSON(matrix.tags) }};
+            const imageName = 'iwf-web/verdaccio';
+            const tagsString = tags.map(tag => `${imageName}:${tag}`).join(',');
+            core.setOutput('tags', tagsString);
 
       - name: Build and push Docker image
         id: build-and-push
@@ -130,11 +147,12 @@ jobs:
         with:
           context: ${{ matrix.contextPath }}
           file: ${{ matrix.dockerfilePath }}
-          build-args: ${{ steps.prepare-build-args.outputs.build-args }}
+          #platforms: linux/amd64,linux/arm64
+          build-args: ${{ steps.prepare.outputs.buildArgs }}
           load: true
-          tags: ${{ join(matrix.tags, ',') }}
-          labels: ${{ steps.meta.outputs.labels }}
-          annotations: ${{ steps.meta.outputs.annotations }}
+          tags: ${{ steps.prepare.outputs.tags }}
+          #labels: ${{ steps.meta.outputs.labels }}
+          #annotations: ${{ steps.meta.outputs.annotations }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
